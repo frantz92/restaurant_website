@@ -71,7 +71,6 @@
 
     initAccordion(){
       const thisProduct = this;
-
     /* find the clickable trigger (the element that should react to clicking) */
       const element = document.querySelector(select.menuProduct.clickable);
       //console.log(element);
