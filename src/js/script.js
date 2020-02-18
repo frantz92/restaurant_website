@@ -55,26 +55,45 @@
   class Product{
     constructor(id, data){
       const thisProduct = this;
-
       thisProduct.id = id;
       thisProduct.data = data;
-
       thisProduct.renderInMenu();
-
-      console.log('New Product: ', thisProduct);
+      thisProduct.initAccordion();
     }
 
     renderInMenu(){
       const thisProduct = this;
-
-      /* generate HTML based on template */
       const generatedHTML = templates.menuProduct(thisProduct.data);
-      /* creat element using utils.creatElementFromHTML */
       thisProduct.element = utils.createDOMFromHTML(generatedHTML);
-      /* find menu container */
       const menuContainer = document.querySelector(select.containerOf.menu);
-      /* add element to menu */
       menuContainer.appendChild(thisProduct.element);
+    }
+
+    initAccordion(){
+      const thisProduct = this;
+
+    /* find the clickable trigger (the element that should react to clicking) */
+      const element = document.querySelector(select.menuProduct.clickable);
+      //console.log(element);
+    /* START: click event listener to trigger */
+      element.addEventListener('click', function(){
+      /* prevent default action for event */
+      event.preventDefault();
+      /* toggle active class on element of thisProduct */
+      thisProduct.element.classList.toggle('active');
+      /* find all active products */
+      const activeTitles = document.querySelectorAll(select.menuProduct.clickable, ('active'));
+      /* START LOOP: for each active product */
+      for (let activeTitle of activeTitles)
+        /* START: if the active product isn't the element of thisProduct */
+        if (activeTitle != this){
+          /* remove class active for the active product */
+          activeTitle.classList.remove('active');
+        /* END: if the active product isn't the element of thisProduct */
+        }
+      /* END LOOP: for each active product */
+      });
+    /* END: click event listener to trigger */
     }
   }
 
@@ -82,7 +101,6 @@
     initMenu: function(){
       const thisApp = this;
 
-      console.log('thisApp.data: ', thisApp.data);
       for(let productData in thisApp.data.products){
         new Product(productData, thisApp.data.products[productData]);
       }
