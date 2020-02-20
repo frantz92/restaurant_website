@@ -79,6 +79,7 @@
       thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+      thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
     }
 
     initAccordion(){
@@ -120,32 +121,34 @@
     processOrder(){
       const thisProduct = this;
       const formData = utils.serializeFormToObject(thisProduct.form);
-      //console.log('formData', formData);
       let price = thisProduct.data.price;
       for(let paramId in thisProduct.data.params){
         const param = thisProduct.data.params[paramId];
-        //console.log(param);
         for (let optionId in param.options){
-          //console.log('optionId', optionId);
           const option = param.options[optionId];
-          //console.log('option', option);
-          //console.log(formData.hasOwnProperty(paramId)); // <- przecież to zawsze jest i będzie TRUE...
-          //console.log(formData[paramId].indexOf(optionId));
           const optionSelected = formData.hasOwnProperty(paramId) && formData[paramId].indexOf(optionId) > -1; //Jak to zadziałało?!
-          //console.log(optionSelected);
-          //console.log('option.price', option.price);
           if (optionSelected && !option.default){
             price = price + option.price;
-            //console.log(price);
           }
           else if (!optionSelected && option.default){
             price = price - option.price;
-            //console.log(price);
+          }
+          const imgs = thisProduct.imageWrapper;
+          const img = imgs.querySelectorAll(`.${paramId}-${optionId}`);
+          if (optionSelected){
+            for(let image of img){
+              image.classList.add('active');
+            }
+          }
+          if (!optionSelected){
+            for(let image of img){
+              image.classList.remove('active');
+            }
           }
         }
       }
+
       thisProduct.priceElem.textContent = price;
-      //console.log(thisProduct.priceElem);
     }
   }
 
