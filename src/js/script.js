@@ -195,7 +195,7 @@
       thisProduct.priceSingle = price;
       thisProduct.price = thisProduct.priceSingle * thisProduct.amountWidget.value;
       thisProduct.priceElem.textContent = thisProduct.price; // Sprawdzić różnice między 'textContent', a 'innerHTML'
-      console.log("Product parameters:  ", thisProduct.params);
+      //console.log("Product parameters:  ", thisProduct.params);
     }
 
     addToCart(){
@@ -213,8 +213,8 @@
       thisWidget.value = settings.amountWidget.defaultValue;
       thisWidget.setValue(thisWidget.input.value);
       thisWidget.initActions();
-      //console.log('AmountWidget', thisWidget);
-      //console.log('constructor args:', element);
+      ////console.log('AmountWidget', thisWidget);
+      ////console.log('constructor args:', element);
     }
 
     getElements(element){
@@ -263,7 +263,7 @@
       thisCart.products=[];
       thisCart.getElements(element);
       thisCart.initActions();
-      console.log('New cart:  ', thisCart);
+      //console.log('New cart:  ', thisCart);
     }
 
     getElements(element){
@@ -281,13 +281,12 @@
       });
     }
 
-/* ERROR */    add(menuProduct){
+    add(menuProduct){
       const thisCart = this;
-      console.log('Adding product: ', menuProduct);
-      const thisProduct = this;
-      const generatedHTML = templates.cartProduct(thisProduct);
+      //console.log('Adding product: ', menuProduct);
+      const generatedHTML = templates.cartProduct(menuProduct);
       const generatedDOM = utils.createDOMFromHTML(generatedHTML);
-      console.log('DOM: ',generatedDOM);
+      //console.log('DOM: ',generatedDOM);
       thisCart.dom.productList.appendChild(generatedDOM);
     }
   }
