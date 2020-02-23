@@ -302,19 +302,20 @@
       //console.log('thisCart.products: ', thisCart.products);
       thisCart.update();
     }
+
     update(){
       const thisCart = this;
       thisCart.totalNumber = 0;
       thisCart.subtotalPrice = 0;
       //let products = thisCart.products;
-      for(thisCart.product of thisCart.products){                              //<- nie wem jak to zapisać, żeby "update", wyświetlał jako funkcję...a jednak działa
-        thisCart.subtotalPrice += thisCart.product.price;
-        thisCart.totalNumber += thisCart.product.amount;
+      for(let product of thisCart.products){
+        thisCart.subtotalPrice += product.price;
+        thisCart.totalNumber += product.amount;
       }
       thisCart.totalPrice = thisCart.subtotalPrice + thisCart.deliveryFee;
-      console.log('Total number: ', thisCart.totalNumber);
-      console.log('Subtotal Price: ', thisCart.subtotalPrice);
-      console.log('Total price: ', thisCart.totalPrice);
+      //console.log('Total number: ', thisCart.totalNumber);
+      //console.log('Subtotal Price: ', thisCart.subtotalPrice);
+      //console.log('Total price: ', thisCart.totalPrice);
       for(let key of thisCart.renderTotalsKeys){
         for(let elem of thisCart.dom[key]){
           elem.innerHTML = thisCart[key];
