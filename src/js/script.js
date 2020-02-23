@@ -291,6 +291,17 @@
       });
     }
 
+    add(menuProduct){
+      const thisCart = this;
+      //console.log('Adding product: ', menuProduct);
+      const generatedHTML = templates.cartProduct(menuProduct);
+      const generatedDOM = utils.createDOMFromHTML(generatedHTML);
+      //console.log('DOM: ',generatedDOM);
+      thisCart.dom.productList.appendChild(generatedDOM);
+      thisCart.products.push(new CartProduct(menuProduct, generatedDOM));
+      //console.log('thisCart.products: ', thisCart.products);
+      thisCart.update();
+    }
     update(){
       const thisCart = this;
       thisCart.totalNumber = 0;
@@ -309,18 +320,6 @@
           elem.innerHTML = thisCart[key];
         }
       }
-    }
-
-    add(menuProduct){
-      const thisCart = this;
-      //console.log('Adding product: ', menuProduct);
-      const generatedHTML = templates.cartProduct(menuProduct);
-      const generatedDOM = utils.createDOMFromHTML(generatedHTML);
-      //console.log('DOM: ',generatedDOM);
-      thisCart.dom.productList.appendChild(generatedDOM);
-      thisCart.products.push(new CartProduct(menuProduct, generatedDOM));
-      //console.log('thisCart.products: ', thisCart.products);
-      thisCart.update();
     }
   }
 
