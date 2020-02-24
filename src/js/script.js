@@ -71,6 +71,11 @@
     cart: {
       defaultDeliveryFee: 20,
     },
+    db: {
+      url: '//localhost:3131',
+      product: 'product',
+      order: 'order',
+    },
   };
 
   const templates = {
@@ -271,11 +276,14 @@
 
     getElements(element){
       const thisCart = this;
+
       thisCart.dom ={};
       thisCart.dom.wrapper = element;
       thisCart.dom.toggleTrigger = thisCart.dom.wrapper.querySelector(select.cart.toggleTrigger);
       thisCart.dom.productList = thisCart.dom.wrapper.querySelector(select.cart.productList);
       thisCart.renderTotalsKeys = ['totalNumber', 'totalPrice', 'subtotalPrice', 'deliveryFee'];
+      thisCart.dom.form = thisCart.dom.wrapper.querySelector(select.cart.form);
+
       for(let key of thisCart.renderTotalsKeys){
         thisCart.dom[key] = thisCart.dom.wrapper.querySelectorAll(select.cart[key]);
       }
@@ -291,6 +299,10 @@
       });
       thisCart.dom.productList.addEventListener('remove', function(){
         thisCart.remove(event.detail.cartProduct);
+      });
+      thisCart.dom.form.addEventListener('submit', function(){
+        event.preventDefault();
+        thisCart.sendOrder();
       });
     }
 
@@ -332,6 +344,48 @@
       thisCart.products.splice(index, 1);
       cartProduct.dom.wrapper.remove();
       thisCart.update();
+    }
+
+    sendOrder(){
+      const thisCart = this;
+      const url = settings.db.url + '/' + settings.db.order;
+
+      thisCart.dom.phone = thisCart.dom.wrapper.querySelector(select.cart.phone).value;             //<- tutaj wrzuciłem, bo w getElements nie aktualizowało się, a po co wywoływać ponownie funkcję
+      thisCart.dom.address = thisCart.dom.wrapper.querySelector(select.cart.address).value;         //<-   -//- (czy to błąd?)
+
+      const payload = {
+        address: thisCart.dom.address,
+        phone: thisCart.dom.phone,
+        number: thisCart.totalNumber,
+        price: thisCart.totalPrice,
+        delivery: thisCart.deliveryFee,
+        total: thisCart.subtotalPrice,
+        products: [],
+      };
+
+      /*for (let product of thisCart.products){
+        product.getData
+      }NIE WIEM JAK TO ROZWIĄZAĆ
+
+      Obiekt payload musi też zawierać tablicę products, która na razie będzie pusta. Pod obiektem payload dodaj pętlę iterującą po wszystkich thisCart.products, i dla każdego produktu wywołaj jego metodę getData, którą za chwilę napiszesz. Wynik zwracany przez tą metodą dodaj do tablicy payload.products.
+
+      Pozostaje nam jeszcze napisanie metody CartProduct.getData, która będzie zwracać wszystkie informacje o zamawianym produkcie – id, amount, price, priceSingle oraz params. Wszystkie te wartości są ustawiane w konstruktorze, więc nie powinno być problemu ze zwróceniem ich ("zapakowanych" w obiekt) z metody getData.
+      */
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      };
+
+      fetch(url, options)
+        .then(function(response){
+          return response.json();
+        })
+        .then(function(parsedResponse){
+          console.log('parsedResponse', parsedResponse);
+        });
     }
   }
 
@@ -401,6 +455,14 @@
       });
 
     }
+
+    /*getData(){
+      return id = thisCartProduct.id;
+      return amount = thisCartProduct.amount;
+      return price = thisCartProduct.price;
+      return priceSingle = thisCartProduct.priceSingle;
+      return params = thisCartProduct.params;
+    }*/
   }
 
   const app = {
@@ -408,13 +470,26 @@
       const thisApp = this;
 
       for(let productData in thisApp.data.products){
-        new Product(productData, thisApp.data.products[productData]);
+        new Product(thisApp.data.products[productData].id, thisApp.data.products[productData]);
       }
     },
 
     initData: function(){
       const thisApp = this;
-      thisApp.data = dataSource;
+      thisApp.data = {};
+      const url = settings.db.url + '/' + settings.db.product;
+      fetch(url)
+        .then(function(rawResponse){
+          return rawResponse.json();
+        })
+        .then(function(parsedResponse){
+          console.log('parsedResponse', parsedResponse);
+          /* save parsedResponse as thisApp.data.products */
+          thisApp.data.products = parsedResponse;
+          /* execute initMenu method */
+          thisApp.initMenu();
+        });
+      console.log('thisApp.data', JSON.stringify(thisApp.data));
     },
 
     initCart: function(){
@@ -432,7 +507,6 @@
       //console.log('templates:', templates);
 
       thisApp.initData();
-      thisApp.initMenu();
       thisApp.initCart();
     },
   };
