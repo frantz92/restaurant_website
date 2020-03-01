@@ -169,7 +169,7 @@
         const param = thisProduct.data.params[paramId];
         for (let optionId in param.options){
           const option = param.options[optionId];
-          const optionSelected = formData.hasOwnProperty(paramId) && formData[paramId].indexOf(optionId) > -1; //Jak to zadziałało?!
+          const optionSelected = formData.hasOwnProperty(paramId) && formData[paramId].indexOf(optionId) > -1;
           if (optionSelected && !option.default){
             price = price + option.price;
           }
@@ -350,9 +350,8 @@
       const thisCart = this;
       const url = settings.db.url + '/' + settings.db.order;
 
-      thisCart.dom.phone = thisCart.dom.wrapper.querySelector(select.cart.phone).value;             //<- tutaj wrzuciłem, bo w getElements nie aktualizowało się, a po co wywoływać ponownie funkcję
-      thisCart.dom.address = thisCart.dom.wrapper.querySelector(select.cart.address).value;         //<-   -//- (czy to błąd?)
-
+      thisCart.dom.phone = thisCart.dom.wrapper.querySelector(select.cart.phone).value;
+      thisCart.dom.address = thisCart.dom.wrapper.querySelector(select.cart.address).value;
       const payload = {
         address: thisCart.dom.address,
         phone: thisCart.dom.phone,
@@ -363,14 +362,11 @@
         products: [],
       };
 
-      /*for (let product of thisCart.products){
-        product.getData
-      }NIE WIEM JAK TO ROZWIĄZAĆ
+      for (let product of thisCart.products){
+        payload.products = product.getData();
+        console.log(payload);
+      }
 
-      Obiekt payload musi też zawierać tablicę products, która na razie będzie pusta. Pod obiektem payload dodaj pętlę iterującą po wszystkich thisCart.products, i dla każdego produktu wywołaj jego metodę getData, którą za chwilę napiszesz. Wynik zwracany przez tą metodą dodaj do tablicy payload.products.
-
-      Pozostaje nam jeszcze napisanie metody CartProduct.getData, która będzie zwracać wszystkie informacje o zamawianym produkcie – id, amount, price, priceSingle oraz params. Wszystkie te wartości są ustawiane w konstruktorze, więc nie powinno być problemu ze zwróceniem ich ("zapakowanych" w obiekt) z metody getData.
-      */
       const options = {
         method: 'POST',
         headers: {
@@ -456,13 +452,17 @@
 
     }
 
-    /*getData(){
-      return id = thisCartProduct.id;
-      return amount = thisCartProduct.amount;
-      return price = thisCartProduct.price;
-      return priceSingle = thisCartProduct.priceSingle;
-      return params = thisCartProduct.params;
-    }*/
+    getData(){
+      const thisCartProduct = this;
+      const products = {
+        id: thisCartProduct.id,
+        amount: thisCartProduct.amount,
+        price: thisCartProduct.price,
+        priceSingle: thisCartProduct.priceSingle,
+        params: thisCartProduct.params,
+      };
+      return products;
+    }
   }
 
   const app = {
@@ -484,9 +484,7 @@
         })
         .then(function(parsedResponse){
           console.log('parsedResponse', parsedResponse);
-          /* save parsedResponse as thisApp.data.products */
           thisApp.data.products = parsedResponse;
-          /* execute initMenu method */
           thisApp.initMenu();
         });
       console.log('thisApp.data', JSON.stringify(thisApp.data));
