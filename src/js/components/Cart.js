@@ -100,8 +100,7 @@ export class Cart{
     };
 
     for (let product of thisCart.products){
-      payload.products = product.getData();
-      console.log(payload);
+      payload.products.push(product.getData());
     }
 
     const options = {
