@@ -116,7 +116,7 @@ export class Cart{
         return response.json();
       })
       .then(function(parsedResponse){
-        console.log('parsedResponse', parsedResponse);
+        console.log('Order: ', parsedResponse);
       });
   }
 }
