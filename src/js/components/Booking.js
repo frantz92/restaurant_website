@@ -33,7 +33,7 @@ export class Booking{
     thisBooking.hourPicker = new HourPicker (thisBooking.dom.hourPicker);
     thisBooking.dom.wrapper.addEventListener('updated', function(){
       thisBooking.updateDOM();
-    })
+    });
   }
 
   getData(){
@@ -104,9 +104,6 @@ export class Booking{
       thisBooking.booked[date] = {};
     }
     const startHour = utils.hourToNumber(hour);
-    const blockHour = 0.5;
-    const endHour = startHour + duration - blockHour;
-    let bookedHours = startHour;
     for (
       let bookedHours = startHour;
       bookedHours < startHour + duration;
