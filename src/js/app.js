@@ -55,7 +55,7 @@ const app = {
         event.preventDefault();
         let pageHref = clickedElement.getAttribute('href');
         pageHref = pageHref.substring(1);
-        console.log('Page:', pageHref);
+        //console.log('Page:', pageHref);
         app.activatePage(pageHref);
       });
     }
