@@ -56,41 +56,43 @@ export class Booking{
       fetch(urls.eventsCurrent),
       fetch(urls.eventsRepeat),
     ])
-    .then(function([bookingsResponse, eventsCurrentResponse, eventsRepeatResponse]){
-      return Promise.all([
-        bookingsResponse.json(),
-        eventsCurrentResponse.json(),
-        eventsRepeatResponse.json(),
-      ]);
-    })
-    .then(function([bookings, eventsCurrent, eventsRepeat]){
-      thisBooking.parseData(bookings, eventsCurrent, eventsRepeat);
-    });
+      .then(function([bookingsResponse, eventsCurrentResponse, eventsRepeatResponse]){
+        return Promise.all([
+          bookingsResponse.json(),
+          eventsCurrentResponse.json(),
+          eventsRepeatResponse.json(),
+        ]);
+      })
+      .then(function([bookings, eventsCurrent, eventsRepeat]){
+        thisBooking.parseData(bookings, eventsCurrent, eventsRepeat);
+      });
   }
 
   parseData(bookings, eventsCurrent, eventsRepeat){
     const thisBooking = this;
     thisBooking.booked = {};
-    //console.log('eventsCurrent', eventsCurrent);
-    for(let item of eventsCurrent){
-      console.log(item);
+    for(let item of bookings){
+      console.log('Bookings: ', item);
       thisBooking.makeBooked(item.date, item.hour, item.duration, item.table);
+      console.log('DateBooking:', thisBooking.booked);
+    }
+    for(let item of eventsCurrent){
+      console.log('CurrentEvents: ', item);
+      thisBooking.makeBooked(item.date, item.hour, item.duration, item.table);
+      console.log('DateEvent:', thisBooking.booked);
     }
   }
 
   makeBooked(date, hour, duration, table){
     const thisBooking = this;
-    thisBooking.booked[date] = {}
+    thisBooking.booked[date] = {};
     const startHour = utils.hourToNumber(hour);
     const blockHour = 0.5;
     const endHour = startHour + duration - blockHour;
-    thisBooking.booked[date][startHour] = [table];
-    thisBooking.booked[date][endHour] = [table];
     let bookedHours = startHour;
-    while(bookedHours < endHour){
+    while(bookedHours <= endHour){
       thisBooking.booked[date][bookedHours] = [table];
       bookedHours += 0.5;
     }
-    console.log(thisBooking.booked);
   }
 }
