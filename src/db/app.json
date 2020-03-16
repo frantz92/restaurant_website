@@ -265,6 +265,16 @@
       "duration": 2,
       "ppl": 2,
       "starters": []
-    }
+    },
+    {
+    "id": 7,
+    "date": "2020-03-18",
+    "hour": "15:00",
+    "table": 2,
+    "repeat": "false",
+    "duration": 2,
+    "ppl": 3,
+    "starters": ["bread", "lemonWater"]
+  }
   ]
 }
