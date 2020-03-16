@@ -21,6 +21,12 @@ export class BaseWidget {
     thisWidget.renderValue();
   }
 
+  setValue(value){
+    const thisWidget = this;
+
+    thisWidget.value = value;
+  }
+
   parseValue(newValue) {
     return parseInt(newValue);
   }
@@ -29,9 +35,10 @@ export class BaseWidget {
     return !isNaN(newValue);
   }
 
-  renderValue() {
+  renderValue(){
     const thisWidget = this;
-    console.log('Widget value: ', thisWidget.value);
+
+    thisWidget.dom.wrapper.innerHTML = thisWidget.value;
   }
 
   announce() {

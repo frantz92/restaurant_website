@@ -38,15 +38,22 @@ export class Booking{
 
   getData(){
     const thisBooking = this;
-    const startEndDates = {};
-    startEndDates[settings.db.dateStartParamKey] = utils.dateToStr(thisBooking.datePicker.minDate);
-    startEndDates[settings.db.dateEndParamKey] = utils.dateToStr(thisBooking.datePicker.maxDate);
-    const endDate = {};
-    endDate[settings.db.dateEndParamKey] = startEndDates[settings.db.dateEndParamKey];
+    const startDateParam = settings.db.dateStartParamKey + '=' + utils.dateToStr(thisBooking.datePicker.minDate);
+    const endDateParam = settings.db.dateEndParamKey + '=' + utils.dateToStr(thisBooking.datePicker.maxDate);
     const params = {
-      booking: utils.queryParams(startEndDates),
-      eventsCurrent: settings.db.notRepeatParam + '&' + utils.queryParams(startEndDates),
-      eventsRepeat: settings.db.repeatParam + '&' + utils.queryParams(endDate),
+      booking: [
+        startDateParam,
+        endDateParam
+      ],
+      eventsCurrent: [
+        settings.db.notRepeatParam,
+        startDateParam,
+        endDateParam
+      ],
+      eventsRepeat: [
+        settings.db.repeatParam,
+        endDateParam
+      ],
     };
     //console.log('getData params', params);
     const urls = {
@@ -74,27 +81,29 @@ export class Booking{
 
   parseData(bookings, eventsCurrent, eventsRepeat){
     const thisBooking = this;
+
     thisBooking.booked = {};
+
     for(let item of bookings){
-      //console.log('Bookings: ', item);
       thisBooking.makeBooked(item.date, item.hour, item.duration, item.table);
     }
+
     for(let item of eventsCurrent){
-      //console.log('CurrentEvents: ', item);
       thisBooking.makeBooked(item.date, item.hour, item.duration, item.table);
     }
+
     const minDate = thisBooking.datePicker.minDate;
     const maxDate = thisBooking.datePicker.maxDate;
+
     for(let item of eventsRepeat){
-      //console.log('RepeatEvents: ', item);
       if(item.repeat == 'daily'){
         for(let loopDate = minDate; loopDate <= maxDate; loopDate = utils.addDays(loopDate, 1)){
           thisBooking.makeBooked(utils.dateToStr(loopDate), item.hour, item.duration, item.table);
         }
-
       }
     }
-    console.log('Bookings: ', thisBooking.booked);
+    console.log('thisBooking.booked', thisBooking.booked);
+
     thisBooking.updateDOM();
   }
 
@@ -118,18 +127,35 @@ export class Booking{
 
   updateDOM(){
     const thisBooking = this;
-    console.log(thisBooking);
-    thisBooking.date = thisBooking.datePicker.correctValue;
-    console.log(thisBooking.date);
+
+    thisBooking.date = thisBooking.datePicker.value;
     thisBooking.hour = utils.hourToNumber(thisBooking.hourPicker.value);
-    console.log(thisBooking.hour);
+
+    console.log(thisBooking);
+
+    let allAvailable = false;
+
+    if(
+      typeof thisBooking.booked[thisBooking.date] == 'undefined'
+      ||
+      typeof thisBooking.booked[thisBooking.date][thisBooking.hour] == 'undefined'
+    ){
+      allAvailable = true;
+    }
+
     for(let table of thisBooking.dom.tables){
-      let tableID = table.getAttribute(settings.booking.tableIdAttribute);
-      //console.log(tableID);
-      if(thisBooking.booked[thisBooking.date][thisBooking.hour].includes(tableID)){
-        table.classList.add(classNames.booking.tableBooked);
+      let tableId = table.getAttribute(settings.booking.tableIdAttribute);
+      if(!isNaN(tableId)){
+        tableId = parseInt(tableId);
       }
-      else{
+
+      if(
+        !allAvailable
+        &&
+        thisBooking.booked[thisBooking.date][thisBooking.hour].includes(tableId)
+      ){
+        table.classList.add(classNames.booking.tableBooked);
+      } else {
         table.classList.remove(classNames.booking.tableBooked);
       }
     }
