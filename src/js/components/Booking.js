@@ -46,14 +46,14 @@ export class Booking{
         endDateParam
       ],
       eventsCurrent: [
-       settings.db.notRepeatParam,
-       startDateParam,
-       endDateParam
-     ],
-     eventsRepeat: [
-       settings.db.repeatParam,
-       endDateParam
-     ],
+        settings.db.notRepeatParam,
+        startDateParam,
+        endDateParam
+      ],
+      eventsRepeat: [
+        settings.db.repeatParam,
+        endDateParam
+      ],
     };
     const urls = {
       booking: settings.db.url + '/' + settings.db.booking + '?' + params.booking,
@@ -137,7 +137,7 @@ export class Booking{
     console.log('date', thisBooking.date);
 
     if
-      (typeof thisBooking.booked[thisBooking.date] == 'undefined'
+    (typeof thisBooking.booked[thisBooking.date] == 'undefined'
       ||
       typeof thisBooking.booked[thisBooking.date][thisBooking.hour] == 'undefined'
     ){
