@@ -18,8 +18,6 @@ export class DatePicker extends BaseWidget{
     const thisWidget = this;
 
     thisWidget.minDate = new Date(thisWidget.value);
-    console.log(thisWidget);
-
     thisWidget.maxDate = utils.addDays(thisWidget.minDate,settings.datePicker.maxDaysInFuture);
 
     flatpickr(thisWidget.dom.input, {

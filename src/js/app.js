@@ -2,6 +2,7 @@ import {Product} from './components/Product.js';
 import {Cart} from './components/Cart.js';
 import {Booking} from './components/Booking.js';
 import {select, settings, classNames} from './settings.js';
+
 const app = {
   initMenu: function(){
     const thisApp = this;
@@ -24,7 +25,6 @@ const app = {
         thisApp.data.products = parsedResponse;
         thisApp.initMenu();
       });
-    //console.log('thisApp.data', JSON.stringify(thisApp.data));
   },
 
   initCart: function(){
@@ -91,4 +91,5 @@ const app = {
     thisApp.initBooking();
   },
 };
+
 app.init();
