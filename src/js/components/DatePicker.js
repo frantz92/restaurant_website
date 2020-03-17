@@ -3,21 +3,23 @@ import {select, settings} from '../settings.js';
 import {utils} from '../utils.js';
 import {BaseWidget} from './BaseWidget.js';
 
-export class DatePicker extends BaseWidget {
-  constructor(wrapper) {
+export class DatePicker extends BaseWidget{
+  constructor(wrapper){
     super(wrapper, utils.dateToStr(new Date()));
+
     const thisWidget = this;
+
     thisWidget.dom.input = thisWidget.dom.wrapper.querySelector(select.widgets.datePicker.input);
+
     thisWidget.initPlugin();
   }
 
-  initPlugin() {
+  initPlugin(){
     const thisWidget = this;
+
     thisWidget.minDate = new Date(thisWidget.value);
-    thisWidget.maxDate = utils.addDays(
-      thisWidget.minDate,
-      settings.datePicker.maxDaysInFuture
-    );
+    thisWidget.maxDate = utils.addDays(thisWidget.minDate,settings.datePicker.maxDaysInFuture);
+
     flatpickr(thisWidget.dom.input, {
       defaultDate: thisWidget.minDate,
       minDate: thisWidget.minDate,
@@ -26,25 +28,23 @@ export class DatePicker extends BaseWidget {
         firstDayOfWeek: 1
       },
       disable: [
-        function(date) {
-          return date.getDay() === 1;
+        function(date){
+          return (date.getDay() === 6 || date.getDay() ===0);
         }
       ],
       onChange: function(dateStr) {
         thisWidget.value = dateStr;
-        console.log(thisWidget.value);
       }
     });
   }
 
-  parseValue() {
-    const thisWidget = this;
-    return thisWidget.dom.value;
+  parseValue(value){
+    return value;
   }
 
-  isValid() {
+  isValid(){
     return true;
   }
 
-  renderValue() {}
+  renderValue(){}
 }
