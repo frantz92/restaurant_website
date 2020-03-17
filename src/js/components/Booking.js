@@ -102,7 +102,7 @@ export class Booking{
 
       }
     }
-    console.log('thisBooking.booked:', thisBooking.booked);
+    //console.log('thisBooking.booked:', thisBooking.booked);
     thisBooking.updateDOM();
   }
 
@@ -128,10 +128,13 @@ export class Booking{
     const thisBooking = this;
 
     thisBooking.date = thisBooking.datePicker.value;
+
     thisBooking.hour = utils.hourToNumber(thisBooking.hourPicker.value);
-    console.log(thisBooking);
+
 
     let allAvailable = false;
+
+    console.log('date', thisBooking.date);
 
     if
       (typeof thisBooking.booked[thisBooking.date] == 'undefined'
@@ -147,6 +150,7 @@ export class Booking{
       }
 
       if(!allAvailable && thisBooking.booked[thisBooking.date][thisBooking.hour].includes(tableId)){
+        //console.log('TRUE');
         table.classList.add(classNames.booking.tableBooked);
       } else {
         table.classList.remove(classNames.booking.tableBooked);
