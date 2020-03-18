@@ -12,6 +12,7 @@ export class Booking{
     thisBooking.initWidgets();
     thisBooking.getData();
     thisBooking.checkTables();
+    thisBooking.initActions();
   }
 
   render(bookingWrapper){
@@ -27,6 +28,8 @@ export class Booking{
     thisBooking.dom.datePicker = thisBooking.dom.wrapper.querySelector(select.widgets.datePicker.wrapper);
     thisBooking.dom.hourPicker = thisBooking.dom.wrapper.querySelector(select.widgets.hourPicker.wrapper);
     thisBooking.dom.tables = thisBooking.dom.wrapper.querySelectorAll(select.booking.tables);
+    thisBooking.dom.form = thisBooking.dom.wrapper.querySelector(select.booking.form);
+
   }
 
   initWidgets(){
@@ -184,5 +187,45 @@ export class Booking{
         }
       });
     }
+  }
+
+  initActions(){
+    const thisBooking = this;
+
+    thisBooking.dom.form.addEventListener('submit', function(){
+      event.preventDefault();
+      thisBooking.sendBooking();
+    });
+  }
+
+  sendBooking(){
+    const thisBooking = this;
+
+    const url = settings.db.url + '/' + settings.db.booking;
+
+    thisBooking.dom.phone = thisBooking.dom.wrapper.querySelector(select.booking.phone).value;
+    thisBooking.dom.address = thisBooking.dom.wrapper.querySelector(select.booking.address).value;
+
+    const payload = {
+      address: thisBooking.dom.address,
+      phone: thisBooking.dom.phone,
+
+    };
+
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    };
+
+    fetch(url, options)
+      .then(function(response){
+        return response.json();
+      })
+      .then(function(parsedResponse){
+        console.log('Booking: ', parsedResponse);
+      });
   }
 }
