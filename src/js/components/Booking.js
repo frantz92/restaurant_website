@@ -205,6 +205,7 @@ export class Booking{
     thisBooking.dom.phone = thisBooking.dom.wrapper.querySelector(select.booking.phone).value;
     thisBooking.dom.address = thisBooking.dom.wrapper.querySelector(select.booking.address).value;
     thisBooking.dom.checkboxes = thisBooking.dom.wrapper.querySelectorAll("input[name ='starter']");
+    thisBooking.dom.tableSelected = thisBooking.dom.wrapper.querySelectorAll('.table.selected');
 
     if(thisBooking.dom.checkboxes[0].checked == true){
       thisBooking.water = true;
@@ -218,7 +219,6 @@ export class Booking{
       thisBooking.bread = false;
     }
 
-
     const payload = {
       address: thisBooking.dom.address,
       phone: thisBooking.dom.phone,
@@ -230,7 +230,13 @@ export class Booking{
         water: thisBooking.water,
         bread: thisBooking.bread,
       },
+      table: [],
     };
+
+    for(let table of thisBooking.dom.tableSelected){
+      let choosenTable = table.getAttribute('data-table');
+      payload.table.push(choosenTable);
+    }
 
     const options = {
       method: 'POST',
