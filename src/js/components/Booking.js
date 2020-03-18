@@ -204,11 +204,32 @@ export class Booking{
 
     thisBooking.dom.phone = thisBooking.dom.wrapper.querySelector(select.booking.phone).value;
     thisBooking.dom.address = thisBooking.dom.wrapper.querySelector(select.booking.address).value;
+    thisBooking.dom.checkboxes = thisBooking.dom.wrapper.querySelectorAll("input[name ='starter']");
+
+    if(thisBooking.dom.checkboxes[0].checked == true){
+      thisBooking.water = true;
+    } else {
+      thisBooking.water = false;
+    }
+
+    if(thisBooking.dom.checkboxes[1].checked == true){
+      thisBooking.bread = true;
+    } else {
+      thisBooking.bread = false;
+    }
+
 
     const payload = {
       address: thisBooking.dom.address,
       phone: thisBooking.dom.phone,
-
+      date: thisBooking.date,
+      time: thisBooking.hour,
+      people: thisBooking.peopleAmount.correctValue,
+      hours: thisBooking.hoursAmount.correctValue,
+      starters: {
+        water: thisBooking.water,
+        bread: thisBooking.bread,
+      },
     };
 
     const options = {
