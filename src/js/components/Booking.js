@@ -88,6 +88,7 @@ export class Booking{
   }
 
   parseData(bookings, eventsCurrent, eventsRepeat){
+    console.log('Parsing Data');
     const thisBooking = this;
 
     const minDate = thisBooking.datePicker.minDate;
@@ -218,14 +219,14 @@ export class Booking{
     } else {
       thisBooking.bread = false;
     }
-
+    console.log(thisBooking);
     const payload = {
       address: thisBooking.dom.address,
       phone: thisBooking.dom.phone,
-      date: thisBooking.date,
-      time: thisBooking.hour,
+      date: thisBooking.datePicker.correctValue,
+      hour: thisBooking.hourPicker.correctValue,
       people: thisBooking.peopleAmount.correctValue,
-      hours: thisBooking.hoursAmount.correctValue,
+      duration: thisBooking.hoursAmount.correctValue,
       starters: {
         water: thisBooking.water,
         bread: thisBooking.bread,
@@ -252,6 +253,10 @@ export class Booking{
       })
       .then(function(parsedResponse){
         console.log('Booking: ', parsedResponse);
-      });
+      })
+      .then(function(){
+        thisBooking.getData();
+        console.log('Getting Data');
+      })
   }
 }
