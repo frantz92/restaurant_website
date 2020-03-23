@@ -94,26 +94,3 @@ const app = {
 };
 
 app.init();
-var slideIndex = 0;
-
-carousel();
-
-
-function carousel () {
-  console.log('karuzelatrwa');
-   var i;
-   var slides = document.getElementsByClassName("slide");
-   console.log(slides[0]);
-   for (i = 0; i < slides.length; i++) {
-     slides[i].style.display = "none";
-   }
-
-   slideIndex++;
-   if (slideIndex > slides.length) {
-     slideIndex = 1
-   }
-   console.log(slideIndex);
-
-   slides[slideIndex-1].style.display = "flex";
-   setTimeout(carousel, 3000); // Change image every 2 seconds
-}

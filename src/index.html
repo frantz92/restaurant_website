@@ -113,6 +113,11 @@
                 <p class="slide-author">-Margaret Osborne</p>
               </div>
             </div>
+            <div style="text-align:center">
+              <span class="dot" onclick="showSlides(0)"></span>
+              <span class="dot" onclick="showSlides(1)"></span>
+              <span class="dot" onclick="showSlides(2)"></span>
+            </div>
         </section>
 
         <section class="gallery"></section>
@@ -125,6 +130,36 @@
       <div class="booking-wrapper container"></div>
     </section>
   </div>
+
+  <script>
+
+  let slideIndex = 0;
+  showSlides(slideIndex);
+
+  function showSlides (n) {
+     var slides = document.getElementsByClassName("slide");
+     var dots = document.getElementsByClassName("dot");
+     if (n > slides.length) {slideIndex = 1}
+     if (n < 1) {slideIndex = slides.length}
+     for (let i = 0; i < slides.length; i++) {
+       slides[i].style.display = "none";
+     }
+
+     for (let i = 0; i < dots.length; i++) {
+       dots[i].style.opacity = ("0.5");
+     }
+
+     slideIndex++;
+     if (slideIndex > slides.length) {
+       slideIndex = 1;
+     }
+
+     slides[slideIndex-1].style.display = "flex";
+     dots[slideIndex-1].style.opacity = "1";
+
+     setTimeout(showSlides, 3000);
+  }
+  </script>
 
   <script id="template-booking-widget" type="text/x-handlebars-template">
     <div class="booking-widget">
