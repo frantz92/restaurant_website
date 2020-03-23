@@ -41,6 +41,8 @@ const app = {
     const thisApp = this;
     thisApp.pages = Array.from(document.querySelector(select.containerOf.pages).children);
     thisApp.navLinks = Array.from(document.querySelectorAll(select.nav.links));
+    thisApp.navButton = Array.from(document.querySelectorAll(select.nav.buttons));
+
     let pagesMatchingHash = [];
     if (window.location.hash > 2){
       const idFromHash = window.location.hash.replace('#/', '');
@@ -50,12 +52,21 @@ const app = {
     }
     thisApp.activatePage(pagesMatchingHash.length ? pagesMatchingHash[0].id : thisApp.pages[0].id);
     for(let link of thisApp.navLinks){
+
       link.addEventListener('click', function(event){
         const clickedElement = this;
         event.preventDefault();
         let pageHref = clickedElement.getAttribute('href');
         pageHref = pageHref.substring(1);
-        //console.log('Page:', pageHref);
+        app.activatePage(pageHref);
+      });
+    }
+    for(let button of thisApp.navButton){
+      button.addEventListener('click', function(event){
+        const clickedElement = this;
+        event.preventDefault();
+        let pageHref = clickedElement.getAttribute('href');
+        pageHref = pageHref.substring(1);
         app.activatePage(pageHref);
       });
     }

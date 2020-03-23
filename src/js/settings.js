@@ -71,6 +71,7 @@ export const select = {
   },
   nav: {
     links: '.main-nav a',
+    buttons: '.main-info button',
   },
 };
 
