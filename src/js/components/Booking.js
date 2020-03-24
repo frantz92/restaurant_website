@@ -51,12 +51,10 @@ export class Booking{
     const endDateParam = settings.db.dateEndParamKey + '=' + utils.dateToStr(thisBooking.datePicker.maxDate);
     const params = {
       booking: [
-        startDateParam,
         endDateParam
       ],
       eventsCurrent: [
         settings.db.notRepeatParam,
-        startDateParam,
         endDateParam
       ],
       eventsRepeat: [
@@ -64,11 +62,13 @@ export class Booking{
         endDateParam
       ],
     };
+    console.log(params.eventsRepeat);
     const urls = {
       booking: settings.db.url + '/' + settings.db.booking + '?' + params.booking,
       eventsCurrent: settings.db.url + '/' + settings.db.event + '?' + params.eventsCurrent,
       eventsRepeat: settings.db.url + '/' + settings.db.event + '?' + params.eventsRepeat,
     };
+    console.log(urls);
 
     Promise.all([
       fetch(urls.booking),
@@ -88,7 +88,11 @@ export class Booking{
   }
 
   parseData(bookings, eventsCurrent, eventsRepeat){
-    console.log('Parsing Data');
+    console.log(bookings);
+    console.log(eventsCurrent);
+    console.log(eventsRepeat);
+
+
     const thisBooking = this;
 
     const minDate = thisBooking.datePicker.minDate;
@@ -108,8 +112,9 @@ export class Booking{
         for(let loopDate = minDate; loopDate <= maxDate; loopDate = utils.addDays(loopDate, 1)){
           thisBooking.makeBooked(utils.dateToStr(loopDate), item.hour, item.duration, item.table);
         }
-
-      }
+      } else {
+          thisBooking.makeBooked(item.date, item.hour, item.duration, item.table);
+        }
     }
 
     thisBooking.updateDOM();
