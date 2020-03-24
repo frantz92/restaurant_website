@@ -47,7 +47,6 @@ export class Booking{
   getData(){
     const thisBooking = this;
 
-    const startDateParam = settings.db.dateStartParamKey + '=' + utils.dateToStr(thisBooking.datePicker.minDate);
     const endDateParam = settings.db.dateEndParamKey + '=' + utils.dateToStr(thisBooking.datePicker.maxDate);
     const params = {
       booking: [
@@ -106,8 +105,8 @@ export class Booking{
           thisBooking.makeBooked(utils.dateToStr(loopDate), item.hour, item.duration, item.table);
         }
       } else {
-          thisBooking.makeBooked(item.date, item.hour, item.duration, item.table);
-        }
+        thisBooking.makeBooked(item.date, item.hour, item.duration, item.table);
+      }
     }
 
     thisBooking.updateDOM();
@@ -253,6 +252,6 @@ export class Booking{
       })
       .then(function(){
         thisBooking.getData();
-      })
+      });
   }
 }
