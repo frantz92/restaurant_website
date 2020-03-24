@@ -51,12 +51,10 @@ export class Booking{
     const endDateParam = settings.db.dateEndParamKey + '=' + utils.dateToStr(thisBooking.datePicker.maxDate);
     const params = {
       booking: [
-        startDateParam,
         endDateParam
       ],
       eventsCurrent: [
         settings.db.notRepeatParam,
-        startDateParam,
         endDateParam
       ],
       eventsRepeat: [
@@ -107,14 +105,15 @@ export class Booking{
         for(let loopDate = minDate; loopDate <= maxDate; loopDate = utils.addDays(loopDate, 1)){
           thisBooking.makeBooked(utils.dateToStr(loopDate), item.hour, item.duration, item.table);
         }
-
-      }
+      } else {
+          thisBooking.makeBooked(item.date, item.hour, item.duration, item.table);
+        }
     }
 
     thisBooking.updateDOM();
   }
 
-  makeBooked(date, hour, duration, table){
+  makeBooked(date, hour, duration, tables){
     const thisBooking = this;
 
     const startHour = utils.hourToNumber(hour);
@@ -127,7 +126,9 @@ export class Booking{
       if (typeof thisBooking.booked[date][bookedHours] == 'undefined') {
         thisBooking.booked[date][bookedHours] = [];
       }
-      thisBooking.booked[date][bookedHours].push(table);
+      for(let table of tables){
+        thisBooking.booked[date][bookedHours].push(table);
+      }
     }
   }
 
@@ -152,7 +153,6 @@ export class Booking{
       if (!isNaN(tableId)){
         tableId = parseInt(tableId);
       }
-
       if(!allAvailable && thisBooking.booked[thisBooking.date][thisBooking.hour].includes(tableId)){
         table.classList.add(classNames.booking.tableBooked);
       } else {
@@ -160,6 +160,7 @@ export class Booking{
       }
 
       if(table.classList.contains(classNames.booking.tableBooked)){
+<<<<<<< HEAD
         console.log('Table automaticly unselected');
         table.classList.remove('selected');
       } // in every change of date or time, unselect tables that are booked already (add to CheckTables)
@@ -188,6 +189,34 @@ export class Booking{
     }
   }
 
+=======
+        table.classList.remove('selected');
+      } // in every change of date or time, unselect tables that are booked already (add to CheckTables)
+    }
+  }
+
+  checkTables(){
+    const thisBooking = this;
+
+    for(let table of thisBooking.dom.tables){
+
+      table.addEventListener('click', function(){
+        let tableNotAvailable = table.classList.contains(classNames.booking.tableBooked);
+        let tableSelected = table.classList.contains(classNames.booking.tableSelected);
+
+        if(!tableNotAvailable && !tableSelected){
+          table.classList.add(classNames.booking.tableSelected);
+        } else if(tableNotAvailable){
+          console.log('Table booked');
+        } else if(!tableNotAvailable && tableSelected){
+          console.log('Table unselected');
+          table.classList.remove(classNames.booking.tableSelected);
+        }
+      });
+    }
+  }
+
+>>>>>>> m10
   initActions(){
     const thisBooking = this;
 
@@ -204,13 +233,50 @@ export class Booking{
 
     thisBooking.dom.phone = thisBooking.dom.wrapper.querySelector(select.booking.phone).value;
     thisBooking.dom.address = thisBooking.dom.wrapper.querySelector(select.booking.address).value;
+<<<<<<< HEAD
+=======
+    thisBooking.dom.checkboxes = thisBooking.dom.wrapper.querySelectorAll(select.booking.starters);
+    thisBooking.dom.tableSelected = thisBooking.dom.wrapper.querySelectorAll(select.booking.tableSelected);
+
+    if(thisBooking.dom.checkboxes[0].checked == true){
+      thisBooking.water = true;
+    } else {
+      thisBooking.water = false;
+    }
+
+    if(thisBooking.dom.checkboxes[1].checked == true){
+      thisBooking.bread = true;
+    } else {
+      thisBooking.bread = false;
+    }
+>>>>>>> m10
 
     const payload = {
       address: thisBooking.dom.address,
       phone: thisBooking.dom.phone,
+<<<<<<< HEAD
 
     };
 
+=======
+      date: thisBooking.datePicker.correctValue,
+      hour: thisBooking.hourPicker.correctValue,
+      people: thisBooking.peopleAmount.correctValue,
+      duration: thisBooking.hoursAmount.correctValue,
+      starters: {
+        water: thisBooking.water,
+        bread: thisBooking.bread,
+      },
+      table: [],
+    };
+
+    for(let table of thisBooking.dom.tableSelected){
+      let choosenTable = table.getAttribute('data-table');
+      let numberOfChoosenTable = parseInt(choosenTable, 10);
+      payload.table.push(numberOfChoosenTable);
+    }
+
+>>>>>>> m10
     const options = {
       method: 'POST',
       headers: {
@@ -225,6 +291,13 @@ export class Booking{
       })
       .then(function(parsedResponse){
         console.log('Booking: ', parsedResponse);
+<<<<<<< HEAD
       });
+=======
+      })
+      .then(function(){
+        thisBooking.getData();
+      })
+>>>>>>> m10
   }
 }

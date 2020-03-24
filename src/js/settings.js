@@ -66,9 +66,15 @@ export const select = {
     form: '.booking-form',
     phone: '[name="phone"]',
     address: '[name="address"]',
+<<<<<<< HEAD
+=======
+    starters: 'input[name ="starter"]',
+    tableSelected: '.table.selected',
+>>>>>>> m10
   },
   nav: {
     links: '.main-nav a',
+    buttons: '.main-info button',
   },
 };
 
@@ -113,7 +119,7 @@ export const settings = {
     tableIdAttribute: 'data-table',
   },
   db: {
-    url: '//localhost:3131',
+    url: '//' + window.location.hostname + (window.location.hostname=='localhost' ? ':3131' : ''),
     product: 'product',
     order: 'order',
     booking: 'booking',

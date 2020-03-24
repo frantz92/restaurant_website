@@ -6,16 +6,14 @@ export class AmountWidget extends BaseWidget{
     const thisWidget = this;
     thisWidget.getElements();
     thisWidget.initActions();
-    //console.log('AmountWidget', thisWidget);
-    //console.log('constructor args:', element);
   }
 
   getElements(){
     const thisWidget = this;
+
     thisWidget.dom.input = thisWidget.dom.wrapper.querySelector(select.widgets.amount.input);
     thisWidget.dom.linkDecrease = thisWidget.dom.wrapper.querySelector(select.widgets.amount.linkDecrease);
     thisWidget.dom.linkIncrease = thisWidget.dom.wrapper.querySelector(select.widgets.amount.linkIncrease);
-    //console.log('thisWidget.dom.input: ',thisWidget.dom.input);
   }
 
   isValid(newValue){
@@ -24,13 +22,16 @@ export class AmountWidget extends BaseWidget{
 
   initActions(){
     const thisWidget = this;
+
     thisWidget.dom.input.addEventListener('change', function(){
       thisWidget.value = thisWidget.dom.input.value;
     });
+
     thisWidget.dom.linkDecrease.addEventListener('click', function(){
       event.preventDefault();
       thisWidget.value--;
     });
+
     thisWidget.dom.linkIncrease.addEventListener('click', function(){
       event.preventDefault();
       thisWidget.value++;
@@ -39,6 +40,7 @@ export class AmountWidget extends BaseWidget{
 
   renderValue(){
     const thisWidget = this;
+
     thisWidget.dom.input.value = thisWidget.value;
   }
 }
