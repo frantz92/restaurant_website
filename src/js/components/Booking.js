@@ -160,7 +160,7 @@ export class Booking{
       }
 
       if(table.classList.contains(classNames.booking.tableBooked)){
-<<<<<<< HEAD
+
         console.log('Table automaticly unselected');
         table.classList.remove('selected');
       } // in every change of date or time, unselect tables that are booked already (add to CheckTables)
@@ -189,7 +189,7 @@ export class Booking{
     }
   }
 
-=======
+
         table.classList.remove('selected');
       } // in every change of date or time, unselect tables that are booked already (add to CheckTables)
     }
@@ -216,7 +216,7 @@ export class Booking{
     }
   }
 
->>>>>>> m10
+
   initActions(){
     const thisBooking = this;
 
@@ -233,8 +233,7 @@ export class Booking{
 
     thisBooking.dom.phone = thisBooking.dom.wrapper.querySelector(select.booking.phone).value;
     thisBooking.dom.address = thisBooking.dom.wrapper.querySelector(select.booking.address).value;
-<<<<<<< HEAD
-=======
+
     thisBooking.dom.checkboxes = thisBooking.dom.wrapper.querySelectorAll(select.booking.starters);
     thisBooking.dom.tableSelected = thisBooking.dom.wrapper.querySelectorAll(select.booking.tableSelected);
 
@@ -249,16 +248,15 @@ export class Booking{
     } else {
       thisBooking.bread = false;
     }
->>>>>>> m10
+
 
     const payload = {
       address: thisBooking.dom.address,
       phone: thisBooking.dom.phone,
-<<<<<<< HEAD
+
 
     };
 
-=======
       date: thisBooking.datePicker.correctValue,
       hour: thisBooking.hourPicker.correctValue,
       people: thisBooking.peopleAmount.correctValue,
@@ -276,7 +274,7 @@ export class Booking{
       payload.table.push(numberOfChoosenTable);
     }
 
->>>>>>> m10
+
     const options = {
       method: 'POST',
       headers: {
@@ -291,13 +289,12 @@ export class Booking{
       })
       .then(function(parsedResponse){
         console.log('Booking: ', parsedResponse);
-<<<<<<< HEAD
       });
-=======
+
       })
       .then(function(){
         thisBooking.getData();
       })
->>>>>>> m10
+
   }
 }

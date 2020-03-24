@@ -66,11 +66,10 @@ export const select = {
     form: '.booking-form',
     phone: '[name="phone"]',
     address: '[name="address"]',
-<<<<<<< HEAD
-=======
+
     starters: 'input[name ="starter"]',
     tableSelected: '.table.selected',
->>>>>>> m10
+
   },
   nav: {
     links: '.main-nav a',
