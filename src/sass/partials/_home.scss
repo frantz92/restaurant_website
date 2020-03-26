@@ -2,6 +2,10 @@
   display: none;
 }
 
+.booking .header .cart {
+  display: none;
+}
+
 .home .header .main-nav {
   display: none;
 }
@@ -9,7 +13,6 @@
 .home .header__wrapper {
   top: 37px;
 }
-
 
 .home-wrapper {
   margin: ($base-size * 3.5) auto;
