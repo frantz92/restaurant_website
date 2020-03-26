@@ -65,9 +65,9 @@ const app = {
       button.addEventListener('click', function(event){
         const clickedElement = this;
         event.preventDefault();
-        let pageHref = clickedElement.getAttribute('href');
-        pageHref = pageHref.substring(1);
-        app.activatePage(pageHref);
+        let pageId = clickedElement.getAttribute('id');
+        pageId = pageId.substring(1);
+        app.activatePage(pageId);
       });
     }
   },
@@ -80,11 +80,58 @@ const app = {
     for(let page of thisApp.pages){
       page.classList.toggle(classNames.nav.active, page.getAttribute('id') == pageId);
     }
-    window.location.hash = '#/' + pageId;
+    window.location.hash = '#' + pageId;
 
     const pageBody = document.querySelector('body');
     pageBody.setAttribute('class', '');
     pageBody.classList.add(pageId);
+    let dotId = 0;
+    const dots = document.querySelectorAll('.dot');
+    let slideIndex = 0;
+
+    if(pageId == 'home'){
+
+      let timer = setInterval(showSlides, 3000);
+      showSlides(slideIndex);
+
+      for(let dot of dots){
+        dot.addEventListener('click', function(){
+          clearInterval(timer);
+          timer = setInterval(showSlides, 3000);
+          let dotId = dot.getAttribute('id');
+          dotId = parseInt(dotId, 10);
+          showSlides(dotId);
+        });
+      }
+
+      showSlides(dotId);
+    }
+
+    function showSlides(dotId){
+
+      const slides = document.getElementsByClassName('slide');
+
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = 'none';
+      }
+
+      for (let i = 0; i < dots.length; i++) {
+        dots[i].style.opacity = ('0.5');
+      }
+
+      slideIndex++;
+
+      if (slideIndex > slides.length) {
+        slideIndex = 1;
+      }
+
+      if(dotId < 3){
+        slideIndex = dotId + 1;
+      }
+
+      slides[slideIndex-1].style.display = 'flex';
+      dots[slideIndex-1].style.opacity = '1';
+    }
   },
 
   initBooking: function(){
