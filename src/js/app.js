@@ -82,6 +82,9 @@ const app = {
     }
     window.location.hash = '#/' + pageId;
 
+    const pageBody = document.querySelector('body');
+    pageBody.setAttribute('class', '');
+    pageBody.classList.add(pageId);
   },
 
   initBooking: function(){

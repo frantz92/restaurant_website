@@ -62,15 +62,6 @@
     </div>
   </header>
 
-<!--  <header class="header_home" display="none">
-    <div class="container">
-      <div class="logo">
-        <h1 class="logo__title"><span>Mamma</span>Mia!</h1>
-        <h2 class="logo__subtitle">the best homemade Italian food</h2>
-      </div>
-    </div>
-  </header>-->
-
   <div id="pages">
     <section id="home">
       <div class="home-wrapper container">
@@ -122,9 +113,9 @@
               </div>
             </div>
             <div style="text-align:center">
-              <span class="dot" onclick="showSlides(0)"></span>
-              <span class="dot" onclick="showSlides(1)"></span>
-              <span class="dot" onclick="showSlides(2)"></span>
+              <span class="dot" onclick="sliderTimer(0)"></span>
+              <span class="dot" onclick="sliderTimer(1)"></span>
+              <span class="dot" onclick="sliderTimer(2)"></span>
             </div>
         </section>
         <section class="gallery">
@@ -174,7 +165,7 @@
                 </div>
             </li>
           </ul>
-          <a href="#" class="btn">View more on Instagram</a>
+          <a href="#" class="btn">View more on Instagram</a> <!--display block -->
         </section>
       </div>
     </section>
@@ -189,13 +180,20 @@
   <script>
 
   let slideIndex = 0;
+  timer = setInterval(showSlides, 3000);
   showSlides(slideIndex);
 
-  function showSlides (n) {
+
+  function sliderTimer(n) {
+    clearInterval(timer);
+    timer = setInterval(showSlides, 3000);
+    showSlides(n);
+  }
+
+  function showSlides(n){
      var slides = document.getElementsByClassName("slide");
      var dots = document.getElementsByClassName("dot");
-     if (n > slides.length) {slideIndex = 1}
-     if (n < 1) {slideIndex = slides.length}
+
      for (let i = 0; i < slides.length; i++) {
        slides[i].style.display = "none";
      }
@@ -205,14 +203,17 @@
      }
 
      slideIndex++;
+
      if (slideIndex > slides.length) {
        slideIndex = 1;
      }
 
+     if(n < 3){
+       slideIndex = n + 1;
+     }
+
      slides[slideIndex-1].style.display = "flex";
      dots[slideIndex-1].style.opacity = "1";
-
-     setTimeout(showSlides, 3000);
   }
   </script>
 

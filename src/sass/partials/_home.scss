@@ -1,10 +1,15 @@
-/*.main-nav, .cart {
+.home .header .cart {
   display: none;
 }
 
-.header__wrapper {
+.home .header .main-nav {
+  display: none;
+}
+
+.home .header__wrapper {
   top: 37px;
-}*/
+}
+
 
 .home-wrapper {
   margin: ($base-size * 3.5) auto;
@@ -266,5 +271,6 @@
 }
 
 .btn {
-  margin-top: 20px;
+  margin-top: 15px;
+  display: inline-block;
 }
