@@ -44,7 +44,7 @@
 
   &_down {
     margin: 5px 0 0 0;
-    background-color: #FF696E;
+    background-color: #FE9090;
     flex: 100%;
     border-radius: $radius;
   }
@@ -171,12 +171,7 @@
 
 .gallery {
   margin: 0 0 20px 0;
-}
-
-.gallery ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
+  overflow: hidden
 }
 
 .gallery-image {
@@ -273,7 +268,19 @@
   color: #33AFC0;
 }
 
-.btn {
-  margin-top: 15px;
-  display: inline-block;
+.social-media {
+  text-align: center;
+}
+
+.social-btn {
+  text-decoration: none;
+  margin: 5px;
+  color: #33AFC0;
+  font-size: 30px;
+  display: inline-flex;
+  transition: .5s;
+}
+
+.social-btn:hover {
+  transform: scale(1.2);
 }

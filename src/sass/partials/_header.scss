@@ -1,6 +1,6 @@
 .header {
   padding: ($base-size * 5) 0 ($base-size * 8) 0;
-  background: $color-dark;
+  background: #33AFC0;
   color: $color-light;
 
   &__wrapper {
@@ -42,12 +42,12 @@
 
   a {
     @extend .h2;
-    color: $color-main;
+    color: #FE9090;
     text-decoration: none;
     margin-right: ($base-size * 2);
     text-align: center;
     padding: $base-size ($base-size * 2);
-    background: darken($color-dark, 5%);
+    background: #33AFC0;
     border-top-left-radius: $radius;
     border-top-right-radius: $radius;
 
