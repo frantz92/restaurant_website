@@ -1,13 +1,3 @@
-.pages {
-  > * {
-    display: none;
-  }
-
-  > .active {
-    display: block;
-  }
-}
-
 .booking .header .cart {
   display: none;
 }
@@ -36,6 +26,13 @@
   > .widget-amount {
     margin: ($base-size * 2) 0 0 0;
   }
+
+  > .checkbox {
+    padding-left: 20px;
+    margin-top: 12px;
+    text-transform: lowercase;
+  }
+
 }
 
 .page__title {
@@ -214,6 +211,58 @@
 }
 
 .booking-options {
-  @include flex(row, flex-start, space-between);
+  @include flex(row, center, space-evenly);
+  align-items: baseline;
   margin: ($base-size * 4) auto;
+}
+
+
+@media only screen and (max-width:457px){
+  .main-nav a{
+    margin: 0;
+    padding: 12px;
+  }
+
+  .page__title {
+    margin: 0;
+  }
+
+  .time-picker {
+    flex-direction: column;
+    align-items: center;
+    
+    & .booking-option-title {
+      margin: 0;
+    }
+  }
+
+  .date-picker,
+  .hour-picker {
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .floor-plan {
+    transform: scale(.75);
+    margin: 0;
+    padding: 0;
+    left: -15%;
+  }
+
+  .booking-options {
+    flex-direction: column;
+  }
+
+  .booking-option-title {
+    display: flex;
+  }
+  .booking-option-title > .widget-amount,
+  .booking-option-title > .checkbox {
+    margin: 0px 10px;
+  }
+
+  .btn-secondary{
+    margin-top: 10px;
+  }
+
 }

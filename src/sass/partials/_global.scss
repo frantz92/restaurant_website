@@ -2,6 +2,16 @@
   box-sizing: border-box;
 }
 
+.pages {
+  > * {
+    display: none;
+  }
+
+  > .active {
+    display: block;
+  }
+}
+
 body {
   margin: 0;
   background: lighten($color-dark, 75%);
