@@ -1,4 +1,4 @@
-#pages {
+.pages {
   > * {
     display: none;
   }
@@ -8,8 +8,12 @@
   }
 }
 
+.booking .header .cart {
+  display: none;
+}
+
 .booking-widget {
-  transform: opacity 500ms;
+  transform: opacity 2500ms;
 
   &.loading {
     opacity: 0.25;
@@ -32,7 +36,6 @@
   > .widget-amount {
     margin: ($base-size * 2) 0 0 0;
   }
-
 }
 
 .page__title {
@@ -54,7 +57,6 @@
     position: absolute;
     right: 0;
   }
-
 }
 
 .rangeSlider {
@@ -79,7 +81,6 @@
       top: -6px;
       background: $color-dark;
     }
-
   }
 
   &__fill {

@@ -2,16 +2,13 @@
   display: none;
 }
 
-.booking .header .cart {
-  display: none;
-}
-
 .home .header .main-nav {
   display: none;
 }
 
 .home .header__wrapper {
   top: 37px;
+  left: 15px;
 }
 
 .home-wrapper {
@@ -33,9 +30,8 @@
 .box {
   position: relative;
   text-align: center;
-  border: none;
-  padding: 0;
   height: 120px;
+  border-radius: $radius;
 
   &_up {
     width: 49.5%;
@@ -43,10 +39,9 @@
   }
 
   &_down {
-    margin: 5px 0 0 0;
+    margin-top: 5px;
     background-color: #FE9090;
-    flex: 100%;
-    border-radius: $radius;
+    width: 100%;
   }
 }
 
@@ -109,25 +104,23 @@
 }
 
 .carousel {
-  margin: 103px 0px 70px 0px;
+  margin: 70px 0;
 }
 
 .slide {
-  //display: flex;
-  display: none;
-  justify-content: space-between;
+  display: flex;
   margin: 0 auto;
-  flex: 0 0 50%;
+  flex-wrap: wrap;
 }
 
 .slide-image {
+  flex: 2;
   overflow: hidden;
   position: relative;
-  float: left;
   width: 100%;
-  height: 192px;
+  height: 100%;
   border-radius: $radius;
-  padding-right: 40px;
+  padding-right: 20px;
 }
 
 .slide-image img {
@@ -137,7 +130,8 @@
 }
 
 .slide-text {
-  padding: 19px 0 0 0;
+  flex: 1;
+  justify-content: center;
 }
 
 .slide-text a{
@@ -169,26 +163,28 @@
   background-color: #717171;
 }
 
-.gallery {
-  margin: 0 0 20px 0;
-  overflow: hidden
+.gallery-container {
+  padding: 5px;
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
 }
 
 .gallery-image {
   position: relative;
-  width: 193px;
-  height: 193px;
-  float: left;
+  width: 30%;
+  height: 190px;
   overflow: hidden;
   border-radius: $radius;
+  margin: 3px;
 }
 
-.left, .center {
-  margin: 5px 12px 8px 0;
-}
-
-.right {
-  margin: 5px 0px 8px 0;
+.gallery img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .gallery-image:after {
@@ -206,12 +202,6 @@
 
 .gallery-image:hover::after {
   opacity: 0.6;
-}
-
-.gallery img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 .heart-icon {
@@ -283,4 +273,40 @@
 
 .social-btn:hover {
   transform: scale(1.2);
+}
+
+@media only screen and (max-width:700px){
+  .box-title,
+  .box_down-title,
+  .box_down-opening {
+    width: 100%;
+  }
+
+  .box-description {
+    display: none;
+  }
+}
+
+@media only screen and (max-width:510px){
+  .slide {
+    flex-direction: column;
+  }
+
+  .slide-image {
+    padding: 0;
+  }
+
+  .gallery-image {
+    width: 45%;
+    height: 100px;
+  }
+
+  .heart-icon {
+    left: 30%;
+  }
+
+  .share-icon {
+    left: 60%;
+  }
+
 }
