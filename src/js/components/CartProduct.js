@@ -1,8 +1,8 @@
-import {select} from '../settings.js';
-import {AmountWidget} from './AmountWidget.js';
+import { select } from '../settings.js';
+import { AmountWidget } from './AmountWidget.js';
 
-export class CartProduct{
-  constructor(menuProduct, element){
+export class CartProduct {
+  constructor(menuProduct, element) {
     const thisCartProduct = this;
 
     thisCartProduct.id = menuProduct.id;
@@ -17,7 +17,7 @@ export class CartProduct{
     thisCartProduct.initActions();
   }
 
-  getElements(element){
+  getElements(element) {
     const thisCartProduct = this;
 
     thisCartProduct.dom = {};
@@ -28,24 +28,24 @@ export class CartProduct{
     thisCartProduct.dom.remove = thisCartProduct.dom.wrapper.querySelector(select.cartProduct.remove);
   }
 
-  initAmountWidget(){
+  initAmountWidget() {
     const thisCartProduct = this;
 
     thisCartProduct.amountWidget = new AmountWidget(thisCartProduct.dom.amountWidget);
 
-    thisCartProduct.dom.amountWidget.addEventListener('updated', function(){
+    thisCartProduct.dom.amountWidget.addEventListener('updated', function () {
       thisCartProduct.amount = thisCartProduct.amountWidget.value;
       thisCartProduct.price = thisCartProduct.priceSingle * thisCartProduct.amount;
       thisCartProduct.dom.price.textContent = thisCartProduct.price;
     });
   }
 
-  remove(){
-    console.log('Remove product from cart');
+  edit() {
+    console.log('Edit product from cart');
 
     const thisCartProduct = this;
 
-    const event = new CustomEvent ('remove', {
+    const event = new CustomEvent('edit', {
       bubbles: true,
       detail: {
         cartProduct: thisCartProduct,
@@ -55,21 +55,31 @@ export class CartProduct{
     thisCartProduct.dom.wrapper.dispatchEvent(event);
   }
 
-  initActions(){
+  remove() {
+    console.log('Remove product from cart');
+
     const thisCartProduct = this;
 
-    thisCartProduct.dom.edit.addEventListener('click', function(){
-      event.preventDefault();
-      console.log('Edit product from cart');
+    const event = new CustomEvent('remove', {
+      bubbles: true,
+      detail: {
+        cartProduct: thisCartProduct,
+      },
     });
 
-    thisCartProduct.dom.remove.addEventListener('click', function(){
+    thisCartProduct.dom.wrapper.dispatchEvent(event);
+  }
+
+  initActions() {
+    const thisCartProduct = this;
+
+    thisCartProduct.dom.remove.addEventListener('click', function () {
       event.preventDefault();
       thisCartProduct.remove();
     });
   }
 
-  getData(){
+  getData() {
     const thisCartProduct = this;
 
     const products = {
