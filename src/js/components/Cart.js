@@ -39,23 +39,6 @@ export class Cart {
       thisCart.update();
     });
 
-    thisCart.dom.productList.addEventListener('edit', function (cartProduct) {
-      let thisProduct = this;
-      console.log(event.detail.cartProduct);
-      console.log(cartProduct);
-      const generatedHTML = templates.cartProduct(cartProduct);
-      const generatedDOM = utils.createDOMFromHTML(generatedHTML);
-      console.log(generatedDOM);
-      /*
-      let productName = cartProduct.detail.cartProduct.name;
-      console.log(productName);
-      let selectProduct = document.getElementsByClassName(productName);
-      console.log(selectProduct);
-      */
-      //selectProduct.scrollIntoView();
-      //thisCart.remove(selectProduct);
-    });
-
     thisCart.dom.productList.addEventListener('remove', function () {
       thisCart.remove(event.detail.cartProduct);
     });
